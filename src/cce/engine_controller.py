@@ -60,12 +60,12 @@ def update_ponderations(epsilons, parameters, PKp):
             )
 
             print(
-                f"\tCurrent ponderation: {parameters[model]['ponderation']} Current amount: {parameters[model]['average amount']} Objective amount:{parameters[model]['average amount']+epsilons[model]}"
+                f"\tCurrent ponderation: {parameters[model]['ponderation']:<10.2f} Current amount: {parameters[model]['average amount']:<10,.2f} Objective amount:{parameters[model]['average amount']+epsilons[model]:<10,.2f}"
             )
             print(
-                f"\tCurrent theoretical ponderation: {current_theoretical_ponderation} Objective theoretical ponderation:{objective_theoretical_ponderation}"
+                f"\tCurrent theoretical ponderation: {current_theoretical_ponderation:<10.2f} Objective theoretical ponderation:{objective_theoretical_ponderation:<10.2f}"
             )
-            print(f"\tp_error = {p_error}  ponderated p_error = {p_error*PKp}")
+            print(f"\tp_error = {p_error:<10.2f}  ponderated p_error = {p_error*PKp:<10.2f}")
 
             # La nueva ponderación se calcula en función del error
 
@@ -80,7 +80,7 @@ def update_ponderations(epsilons, parameters, PKp):
 
             new_ponderation[model] = new_model_ponderaration
 
-            print(f"\tNew ponderation: {new_ponderation[model]}")
+            print(f"\tNew ponderation: {new_ponderation[model]:<10.2f}")
 
         else:
             print("\tNo new ponderation needed")
@@ -239,7 +239,7 @@ def update_thresholds_for_unit(
             "threshold",
         ] = new_threshold
 
-        print(f"\tThreshold: {threshold} | New threshold: {new_threshold}")
+        print(f"\tThreshold: {threshold:<6.2f} | New threshold: {new_threshold:<6.2f}")
         # print(f"\tponderation: {ponderation}, \tnew ponderation: {new_ponderation}\n")
 
         time_of_update = datetime.now().strftime("%H:%M:%S")
@@ -366,11 +366,11 @@ def update_ponderation_for_unit(
     print(f"******** Regulating ponderation by: {ponderation_update_type} ********")
 
     print(
-        f"\n\tActual Accumulated Amount: ${metrics.real_amount:,.0f} | Required Accumulated Amount: ${metrics.required_amount:,.0f} | ",
+        f"\n\tActual Accumulated Amount: {metrics.real_amount:,.0f} | Required Accumulated Amount: {metrics.required_amount:,.0f} | ",
         end="",
     )
     print(
-        f"Accumulated Amount Error: ${metrics.amount_error:,.0f} | Error in %: {metrics.percentage_amount_error*100:.1f}%"
+        f"Accumulated Amount Error: {metrics.amount_error:,.0f} | Error in %: {metrics.percentage_amount_error*100:.1f}%"
     )
     print(
         f"\tClosest date {closest_date} | Gap in days: {days_ahead} | End of month: {is_end_of_month}"
