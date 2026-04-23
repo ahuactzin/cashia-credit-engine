@@ -23,8 +23,6 @@ def get_interval_dates(
 
     storage = get_storage()
 
-    print(f"***** FILE KEY: {file_key}    ")
-
     dates_df = storage.read_excel(file_key)
 
     # Asegúrate de que las columnas de fecha estén en formato de fecha
