@@ -1,6 +1,6 @@
 # Cashia Credit Engine (CCE)
 
-**CCE (Cashia Credit Engine)** is the module responsible for the
+**cashia-credit-engine ** is the module responsible for the
 **credit decision and parameter correction engine** within the Cashia
 ecosystem.
 
@@ -12,10 +12,10 @@ It executes the business logic used to:
 -   compute parameter corrections
 -   orchestrate credit model updates
 
-CCE is designed to run as an **internal engine** that can be triggered
+cashia-credit-engine is designed to run as an **internal engine** that can be triggered
 manually, scheduled, or executed by other Cashia services.
 
-CCE depends on:
+cashia-credit-engine depends on:
 
 -   **cashia-core** -- shared utilities, configuration, storage
     abstraction
@@ -27,7 +27,7 @@ CCE depends on:
 
 # 1. Requirements
 
-Before installing CCE, ensure the following are available:
+Before installing cashia-credit-engine, ensure the following are available:
 
 -   Python **3.11**
 -   pip
@@ -38,7 +38,7 @@ Before installing CCE, ensure the following are available:
 ```
     cashia-core
     cashia-model
-    cce
+    cashia-credit-engine
 
 Recommended tools:
 
@@ -99,7 +99,7 @@ Example structure:
     │
     ├── cashia-core
     ├── cashia-model
-    ├── cce
+    ├── cashia-credit-engine
     ├── cashia-api
     └── mlp
 
@@ -108,7 +108,7 @@ Install dependencies in editable mode:
 ``` bash
 pip install -e cashia-core
 pip install -e cashia-model
-pip install -e cce
+pip install -e cashia-credit-engine
 ```
 
 Editable mode is recommended during development.
@@ -117,14 +117,14 @@ Editable mode is recommended during development.
 
 # 4. Project Structure
 
-A typical structure of the CCE project:
+A typical structure of the cashia-credit-engine project:
 
-    cce
+    cashia-credit-engine
     │   pyproject.toml
     │   README.md
     │
     └───src
-        └───cce
+        └───cashia-credit-engine
             │   engine_controller.py
             │   db_manager.py
             │   models_manager.py
@@ -148,7 +148,7 @@ A typical structure of the CCE project:
 
 # 5. Engine Database
 
-CCE maintains an internal **SQLite database** used to track engine
+cashia-credit-engine maintains an internal **SQLite database** used to track engine
 statistics and parameter updates.
 
 Typical tables may include:
@@ -170,11 +170,11 @@ execution environment.
 
 # 6. Command Line Execution
 
-CCE defines entry points in `pyproject.toml` such as:
+cashia-credit-engine defines entry points in `pyproject.toml` such as:
 
 ``` toml
 [project.scripts]
-cce-engine = "cashia_credit_engine.engine_controller:main"
+cc-engine = "cashia_credit_engine.engine_controller:main"
 cce-db = "cashia_credit_engine.db_manager:main"
 ```
 
@@ -185,7 +185,7 @@ Example:
 Run the credit engine:
 
 ``` bash
-cce-engine
+cc-engine
 ```
 
 Initialize or inspect the database:
@@ -198,7 +198,7 @@ cce-db
 
 # 7. Typical Workflow
 
-The CCE engine usually follows this process:
+The cashia-credit-engine engine usually follows this process:
 
 1.  Load new credit applications
 2.  Identify model categories
@@ -217,7 +217,7 @@ Simplified workflow:
 Example manual execution from a terminal:
 
 ``` bash
-cce-engine
+cc-engine
 ```
 
 Or directly through Python:
@@ -232,7 +232,7 @@ main()
 
 # 9. Interaction with Other Cashia Modules
 
-CCE interacts with other components as follows:
+cashia-credit-engine interacts with other components as follows:
 
   Component      Role
   -------------- ----------------------------------
@@ -240,14 +240,14 @@ CCE interacts with other components as follows:
   cashia-model   machine learning models
   cashia-api     external service layer
 
-CCE acts as the **internal computation engine**, while the API exposes
+cashia-credit-engine acts as the **internal computation engine**, while the API exposes
 results externally.
 
 ------------------------------------------------------------------------
 
 # 10. Configuration
 
-CCE uses configuration files managed through **cashia-core**.
+cashia-credit-engine uses configuration files managed through **cashia-core**.
 
 Typical resources include:
 
@@ -281,7 +281,7 @@ config_df = storage.read_excel(
 During development install using:
 
 ``` bash
-pip install -e cce
+pip install -e cashia-credit-engine
 ```
 
 ## Reinstall after changes
@@ -289,7 +289,7 @@ pip install -e cce
 If dependencies change:
 
 ``` bash
-pip install -e cce --upgrade
+pip install -e cashia-credit-engine --upgrade
 ```
 
 ------------------------------------------------------------------------
