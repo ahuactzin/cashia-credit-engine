@@ -4,8 +4,8 @@ import numpy as np
 
 from datetime import timedelta
 
-from cce.utils import *
-from cce.config import *
+from cashia_credit_engine.utils import *
+from cashia_credit_engine.config import *
 
 from cashia_core.common_tools.storage import get_storage
 

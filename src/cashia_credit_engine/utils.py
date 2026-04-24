@@ -4,7 +4,7 @@ from datetime import date, datetime
 from datetime import datetime, timedelta
 
 from cashia_core.common_tools.storage import get_storage
-from cce.config import PK_CALENDAR_FILE_KEY
+from cashia_credit_engine.config import PK_CALENDAR_FILE_KEY
 
 
 def get_requested_average_ticket(unit: str, required_values, column_name) -> float:

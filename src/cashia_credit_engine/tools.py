@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Dict, Tuple
 
-from cce.config import *
+from cashia_credit_engine.config import *
 
 def find_closest_date(unit_stats, real_amount, today):
     """

@@ -174,8 +174,8 @@ CCE defines entry points in `pyproject.toml` such as:
 
 ``` toml
 [project.scripts]
-cce-engine = "cce.engine_controller:main"
-cce-db = "cce.db_manager:main"
+cce-engine = "cashia_credit_engine.engine_controller:main"
+cce-db = "cashia_credit_engine.db_manager:main"
 ```
 
 This allows execution from the command line.
@@ -223,7 +223,7 @@ cce-engine
 Or directly through Python:
 
 ``` python
-from cce.engine_controller import main
+from cashia_credit_engine.engine_controller import main
 
 main()
 ```

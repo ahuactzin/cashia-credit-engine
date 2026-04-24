@@ -9,7 +9,7 @@ Description: Insert description here.
 import sqlite3
 import pandas as pd
 
-from cce.config import *
+from cashia_credit_engine.config import *
 from cashia_core.common_tools.storage import get_storage
 
 

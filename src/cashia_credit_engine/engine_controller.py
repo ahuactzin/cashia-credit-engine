@@ -3,11 +3,11 @@ import time
 from art import text2art
 import traceback
 
-from cce.config import RISK_FILE_KEY
-from cce.lending import *
-from cce.db_manager import *
-from cce.ponderation_inverser import *
-from cce.tools import *
+from cashia_credit_engine.config import RISK_FILE_KEY
+from cashia_credit_engine.lending import *
+from cashia_credit_engine.db_manager import *
+from cashia_credit_engine.ponderation_inverser import *
+from cashia_credit_engine.tools import *
 
 from cashia_core.common_tools.configuration.cashiaconstants import *
 from cashia_core.common_tools.storage import get_storage

@@ -36,5 +36,5 @@ cce = [
 ]
 
 [project.scripts]
-cc-engine = "cce.engine_controller:main"
-cce-db = "cce.db_manager:main"
+cc-engine = "cashia_credit_engine.engine_controller:main"
+cce-db = "cashia_credit_engine.db_manager:main"
