@@ -118,22 +118,22 @@ MAX_ALLOWED_THRESHOLD = {
 # Número máximo de dias que podemos estar adelantados en el monto acumulado
 MAX_DAYS_AHEAD = 2
 
-# Tablas del CCE
+# Tablas del cashia-credit-engine
 CCE_THRESHOLD_STATS_TABLE = "stats_threshold_cce"
 CCE_PONDERATION_STATS_TABLE = "stats_ponderation_cce"
 
 # Base SQLite local del CCE
-CCE_DATABASE_DIR = Path(tempfile.gettempdir()) / "cce"
-CCE_DATABASE_FILE = "cce_db.db"
+CCE_DATABASE_DIR = Path(tempfile.gettempdir()) / "cashia-credit-engine"
+CCE_DATABASE_FILE = "cashia-credit-engine_db.db"
 CCE_DATABASE_PATH = CCE_DATABASE_DIR / CCE_DATABASE_FILE
 
 # Recursos lógicos que sí pueden vivir en storage local/S3
 CCE_RESOURCE_KEYS = {
-    "pk_calendar": "cce/inputs/calendario_pk.xlsx",
-    "risk": "cce/config/config_risk.xlsx",
-    "applications": "cce/storage/applications.csv",
-    "threshold_database_excel": "cce/outputs/threshold_database.xlsx",
-    "ponderation_database_excel": "cce/outputs/ponderation_database.xlsx",
+    "pk_calendar": "cashia-credit-engine/inputs/calendario_pk.xlsx",
+    "risk": "cashia-credit-engine/config/config_risk.xlsx",
+    "applications": "cashia-credit-engine/storage/applications.csv",
+    "threshold_database_excel": "cashia-credit-engine/outputs/threshold_database.xlsx",
+    "ponderation_database_excel": "cashia-credit-engine/outputs/ponderation_database.xlsx",
 }
 
 
@@ -143,7 +143,7 @@ def get_cce_resource_key(name: str) -> str:
     except KeyError as e:
         available = ", ".join(sorted(CCE_RESOURCE_KEYS.keys()))
         raise KeyError(
-            f"Unknown CCE resource: '{name}'. Available: {available}"
+            f"Unknown cashia-credit-engine resource: '{name}'. Available: {available}"
         ) from e
 
 
