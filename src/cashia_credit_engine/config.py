@@ -1,11 +1,20 @@
 from cashia_core.common_tools.configuration.cashiaconstants import *
 from pathlib import Path
 import tempfile
+import os
+from dotenv import load_dotenv
 
-HOST = "promok.mx"  # Host
-DATABASE = "promokmx_promocashprod"  # Nombre de la base de datos
-USER = "promokmx_consultas"  # Usuario de la base de datos
-PASSWORD = "pr.24QPC#"  # Contraseña del usuario
+# HOST = "promok.mx"  # Host
+# DATABASE = "promokmx_promocashprod"  # Nombre de la base de datos
+# USER = "promokmx_consultas"  # Usuario de la base de datos
+# PASSWORD = "pr.24QPC#"  # Contraseña del usuario
+
+load_dotenv()  # Carga las variables de entorno desde el archivo .env
+
+HOST = os.getenv("DB_HOST")
+DATABASE = os.getenv("DB_NAME")
+USER = os.getenv("DB_USER")
+PASSWORD = os.getenv("DB_PASSWORD")
 
 PROMOK_TABLE_COLUMNS = [
     "IdSolicitud",
