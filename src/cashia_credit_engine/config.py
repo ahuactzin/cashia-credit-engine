@@ -30,9 +30,12 @@ PROMOK_TABLE_COLUMNS = [
     "monto_cliente",
     "monto_max_cashia",
     "monto_agente",
+    "liberado",
+    "fecha_liberado",
 ]
 
-PROCEDURE_NAME = "sp_sol_unidad"
+# PROCEDURE_NAME = "sp_sol_unidad"
+PROCEDURE_NAME = "sp_sol_unidad2026"
 
 # Unidades que serán monitoreadas y actualizadas por el CCE
 UNITS_TO_UPGRADE = [
