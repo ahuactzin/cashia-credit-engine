@@ -64,8 +64,14 @@ def read_previous_applications(first_day, end_date):
 
         # Calcular un día antes de la fecha máxima en el data frame
         max_date = df["Fecha"].max()
+
+        # Limit date es la última fecha menos un día
         limit_date = max_date - timedelta(days=1)
 
+        # Si la fecha límite está dentro del rango de fechas que estamos consultando, entonces 
+        # sí podemos usar los datos previos, pero solo hasta la fecha límite, después de esa fecha 
+        # no podemos usar los datos previos porque pueden no estar actualizados, por lo que el 
+        # primer día para el que podemos usar los datos previos es el día después de la fecha límite
         if limit_date >= pd.to_datetime(first_day) and limit_date <= pd.to_datetime(end_date):
             # Filtrar el DataFrame dejando solo las filas con fecha menor o igual a limit_date
             df = df[df["Fecha"] <= limit_date]
@@ -87,14 +93,27 @@ def get_all_applications(first_day, end_date, units):
     connection = None
 
     try:
+        print("Connecting to the database...")
         connection = mysql.connector.connect(
-            host=HOST, # Host
-            database=DATABASE, # Nombre de la base de datos
-            user=USER, # Usuario de la base de datos
-            password=PASSWORD, # Contraseña del usuario
+            host=HOST,
+            database=DATABASE,
+            user=USER,
+            password=PASSWORD,
+            use_pure=True,
+            connection_timeout=30,
         )
+        # Ponemos este bloque en comentarios ya que no se pueden usar los datos previos 
+        # como antes ya que ahora es siempre necesario consultar los datos desde la primera
+        # fecha ya que el estado de un credito, por ejemplo al inicio de mes pudo cambiar a
+        # liberado mucho tiempo después que otros.
+
         # Leemos las solicitudes que ya hemos cargado de la base de datos con anterioridad
-        promok_all_units_df, first_day = read_previous_applications(first_day, end_date)
+        # promok_all_units_df, first_day = read_previous_applications(first_day, end_date)
+
+        # Creamos un DataFrame vacío para almacenar los datos de todas las unidades
+
+        print("Retrieving applications from the database...")
+        promok_all_units_df = pd.DataFrame() 
 
         if connection.is_connected():
             cursor = connection.cursor()
@@ -122,7 +141,7 @@ def get_all_applications(first_day, end_date, units):
                 if num_rows != 0:
                     df = pd.DataFrame(rows, columns=PROMOK_TABLE_COLUMNS)
 
-                    # 🔧 Convertimos inmediatamente la fecha del nuevo DataFrame
+                    # Convertimos inmediatamente la fecha del nuevo DataFrame
                     df["Fecha"] = pd.to_datetime(df["Fecha"])
 
                     promok_all_units_df = pd.concat(
@@ -143,6 +162,20 @@ def get_all_applications(first_day, end_date, units):
                     .fillna(0.0) # rellena NaN (reales) con 0.0
                 )
 
+                print(promok_all_units_df)
+                total_rows = len(promok_all_units_df)
+                print(f"Total rows: {total_rows}")
+
+                # Seleccionamos solo las solicitudes liberadas, ya que solo estas son las que 
+                # se deben considerar para el análisis de los créditos otorgados.
+                promok_all_units_df = promok_all_units_df[(promok_all_units_df["liberado"] == 1) | 
+                                                          (promok_all_units_df["Dictamen"].isin(["RM", "RC"]))]
+                selected_rows = len(promok_all_units_df)
+                print(f"Selected rows (liberadas): {selected_rows}")
+                print(f"That is {selected_rows/total_rows:.2%} of the total rows")
+                print(promok_all_units_df)
+
+
                 # Escribimos el archivo actualizado de las solicitudes que hemos recuperado de la base de datos
                 storage.write_csv(
                     APPLICATIONS_FILE_KEY,
@@ -157,9 +190,14 @@ def get_all_applications(first_day, end_date, units):
                 promok_all_units_df["Modelo"] = promok_all_units_df["Modelo"].replace(
                     "N/A", "Manual"
                 )
-
     except mysql.connector.Error as e:
-        print(f"Error connecting or executing the procedure: {e}")
+        print(f"MySQL error: {e}", flush=True)
+        promok_all_units_df = pd.DataFrame()
+
+    except Exception:
+        import traceback
+        print("ERROR GENERAL EN get_all_applications:", flush=True)
+        traceback.print_exc()
         promok_all_units_df = pd.DataFrame()
 
     finally:
@@ -773,6 +811,7 @@ def generate_cashia_daily_stats(units, first_day, today, end_of_the_month):
     # 1 Calcular los montos totales acumulados así com los montos acumulados por Cashia
     credits_data = generate_cumulated_amounts(units, first_day, today, end_of_the_month)
     if not credits_data:
+        print("No se pudieron generar las estadísticas de Cashia debido a un error en la conexión a la base de datos o a la falta de datos. Por favor, revise los logs para más detalles.")
         return {}
 
     all_stats = credits_data["stats"]
