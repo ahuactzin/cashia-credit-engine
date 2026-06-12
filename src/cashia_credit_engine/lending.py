@@ -80,11 +80,11 @@ def read_previous_applications(first_day, end_date):
         else:
             # No hay datos previos para el rango de fechas especificado no se usarán los datos previos
             # por lo que pueden ignorarse
-            print("No hay datos previos para el rango de fechas especificado.")
+            print("There are no previous data for the specified date range")
             df = pd.DataFrame()
     else:
         df = pd.DataFrame()
-        print("Archivo no encontrado. Se creó un DataFrame vacío.")
+        print("File not found. An empty DataFrame was created.")
 
     return df, first_day
 
@@ -187,7 +187,7 @@ def get_all_applications(first_day, end_date, units):
 
     except Exception:
         import traceback
-        print("ERROR GENERAL EN get_all_applications:", flush=True)
+        print("General error in get_all_applications:", flush=True)
         traceback.print_exc()
         promok_all_units_df = pd.DataFrame()
 
@@ -802,7 +802,10 @@ def generate_cashia_daily_stats(units, first_day, today, end_of_the_month):
     # 1 Calcular los montos totales acumulados así com los montos acumulados por Cashia
     credits_data = generate_cumulated_amounts(units, first_day, today, end_of_the_month)
     if not credits_data:
-        print("No se pudieron generar las estadísticas de Cashia debido a un error en la conexión a la base de datos o a la falta de datos. Por favor, revise los logs para más detalles.")
+        print(
+            "The stats could not be generated due to an error in the connection "
+            "to the database or lack of data. Please check the logs for more details."
+        )
         return {}
 
     all_stats = credits_data["stats"]
