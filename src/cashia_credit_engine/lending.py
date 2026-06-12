@@ -162,19 +162,10 @@ def get_all_applications(first_day, end_date, units):
                     .fillna(0.0) # rellena NaN (reales) con 0.0
                 )
 
-                print(promok_all_units_df)
-                total_rows = len(promok_all_units_df)
-                print(f"Total rows: {total_rows}")
-
                 # Seleccionamos solo las solicitudes liberadas, ya que solo estas son las que 
                 # se deben considerar para el análisis de los créditos otorgados.
                 promok_all_units_df = promok_all_units_df[(promok_all_units_df["liberado"] == 1) | 
                                                           (promok_all_units_df["Dictamen"].isin(["RM", "RC"]))]
-                selected_rows = len(promok_all_units_df)
-                print(f"Selected rows (liberadas): {selected_rows}")
-                print(f"That is {selected_rows/total_rows:.2%} of the total rows")
-                print(promok_all_units_df)
-
 
                 # Escribimos el archivo actualizado de las solicitudes que hemos recuperado de la base de datos
                 storage.write_csv(
