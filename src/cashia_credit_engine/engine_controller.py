@@ -5,7 +5,14 @@ import traceback
 
 from cashia_credit_engine.config import RISK_FILE_KEY
 from cashia_credit_engine.lending import *
-from cashia_credit_engine.db_manager import *
+# from cashia_credit_engine.db_manager import *
+from cashia_credit_engine.db_manager import (
+    read_from_data_base,
+    insert_into_cce_database,
+    THRESHOLD_CHANGE,
+    PONDERATION_CHANGE,
+    DatabaseUnavailableError,
+)
 from cashia_credit_engine.ponderation_inverser import *
 from cashia_credit_engine.tools import *
 
@@ -108,19 +115,28 @@ def update_threshold(
 
     return new_threshold
 
-
 def get_changes_stats(month, year, table_name):
-    # Leer la base de datos donde llevamos el control de los camios
-    stats_df = read_from_data_base(table_name)
+    # Leer la base de datos donde llevamos el control de los cambios
+    try:
+        stats_df = read_from_data_base(table_name)
+
+    except DatabaseUnavailableError:
+        print(
+            "The database is not up. "
+            "An empty DataFrame will be returned."
+        )
+        return pd.DataFrame()
 
     # Obtener el último IdProcesado
     if not stats_df.empty:
 
-        # Seleccionamos las estadísticas para el mes promocash y año actuales
-        stats_df = stats_df[(stats_df["Month"] == month) & (stats_df["Year"] == year)]
+        # Seleccionamos las estadísticas para el mes Promocash y año actuales
+        stats_df = stats_df[
+            (stats_df["Month"] == month)
+            & (stats_df["Year"] == year)
+        ]
 
     return stats_df
-
 
 def update_thresholds_for_unit(
     unit,
@@ -500,8 +516,11 @@ def execute_parameters_correction(units, start_date, today, end_of_the_month):
         return False
 
     # Leer la base de datos donde llevamos el control de los camios para el mes y año actuales
-    thresholds_stats_df = get_changes_stats(month, year, CCE_THRESHOLD_STATS_TABLE)
-    ponderation_stats_df = get_changes_stats(month, year, CCE_PONDERATION_STATS_TABLE)
+    try:
+        thresholds_stats_df = read_from_data_base(CCE_THRESHOLD_STATS_TABLE)
+        ponderation_stats_df = read_from_data_base(CCE_PONDERATION_STATS_TABLE)
+    except DatabaseUnavailableError:
+        return False
 
     all_units_threshold_updates = []
     all_units_ponderation_updates = []
