@@ -96,6 +96,7 @@ def get_all_applications(first_day, end_date, units):
         print("Connecting to the database...")
         connection = mysql.connector.connect(
             host=HOST,
+            port=6033,
             database=DATABASE,
             user=USER,
             password=PASSWORD,
