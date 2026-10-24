@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cashia-credit-engine"
-version = "0.7.0"
+version = "1.0"
 description = "Cashia's credit engine (CCE)"
 authors = [
     { name = "Juan Manuel Ahuactzin", email = "juan.manuel.ahuactzin@gmail.com" }
@@ -13,6 +13,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 
 dependencies = [
+    # "pandas==1.5.3", # Versión anterior
     "pandas==1.5.3",
     "numpy==1.26.0",
     "openpyxl>=3.1",
