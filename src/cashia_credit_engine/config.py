@@ -99,7 +99,7 @@ MIN_MODEL_SAMPLES_TO_UPDATE_THRESHOLD = {
 }
 
 MIN_ALLOWED_THRESHOLD = {
-    BOCA_DEL_RIO: {NV_AGT: 0.20, NV_CC: 0.20, RNV_AGT: 0.20, RNV_CC: 0.20},
+    BOCA_DEL_RIO: {NV_AGT: 0.10, NV_CC: 0.20, RNV_AGT: 0.10, RNV_CC: 0.20},
     CORDOBA: {NV_AGT: 0.20, NV_CC: 0.28, RNV_AGT: 0.24, RNV_CC: 0.28},
     CUAUTLA: {NV_AGT: 0.29, NV_CC: 0.20, RNV_AGT: 0.25, RNV_CC: 0.23},
     OAXACA: {NV_AGT: 0.34, NV_CC: 0.20, RNV_AGT: 0.31, RNV_CC: 0.23},
@@ -134,6 +134,8 @@ CCE_DATABASE_DIR = Path(tempfile.gettempdir()) / "cashia-credit-engine"
 CCE_DATABASE_FILE = "cashia-credit-engine_db.db"
 CCE_DATABASE_PATH = CCE_DATABASE_DIR / CCE_DATABASE_FILE
 
+CCE_PENDING_DB_CHANGES_FILE_KEY = "cce_pending_db_changes"
+
 # Recursos lógicos que sí pueden vivir en storage local/S3
 CCE_RESOURCE_KEYS = {
     "pk_calendar": "cashia-credit-engine/inputs/calendario_pk.xlsx",
@@ -141,6 +143,7 @@ CCE_RESOURCE_KEYS = {
     "applications": "cashia-credit-engine/storage/applications.csv",
     "threshold_database_excel": "cashia-credit-engine/outputs/threshold_database.xlsx",
     "ponderation_database_excel": "cashia-credit-engine/outputs/ponderation_database.xlsx",
+    CCE_PENDING_DB_CHANGES_FILE_KEY: "cashia-credit-engine/outputs/pending_db_changes.csv",
 }
 
 
