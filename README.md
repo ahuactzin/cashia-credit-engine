@@ -29,7 +29,7 @@ cashia-credit-engine depends on:
 
 Before installing cashia-credit-engine, ensure the following are available:
 
--   Python **3.11**
+-   Python **3.13**
 -   pip
 -   Access to the following repositories:
 
@@ -54,7 +54,7 @@ Recommended tools:
 Create the environment:
 
 ``` bash
-conda create -n cashia_env python=3.11
+conda create -n cashia_env python=3.13
 ```
 
 Activate it:
