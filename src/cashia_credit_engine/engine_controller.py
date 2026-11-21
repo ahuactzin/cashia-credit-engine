@@ -18,12 +18,12 @@ from cashia_credit_engine.tools import *
 
 from cashia_core.common_tools.configuration.cashiaconstants import *
 from cashia_core.common_tools.storage import get_storage
-from cashia_core.common_tools.configuration.resource_keys import get_resource_path
+from cashia_core.common_tools.configuration.resource_keys import get_resource_file
 
 
 num_intervals = 100
 storage = get_storage()
-CONFIG_FILE_KEY = get_resource_path("configuration")
+CONFIG_FILE_KEY = get_resource_file("configuration")
 
 # Parámetros
 Kp = 0.25  # Ganancia proporcional
